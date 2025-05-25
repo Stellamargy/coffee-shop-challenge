@@ -38,12 +38,42 @@ class Coffee():
         
 
 class Order():
-    pass
+        def __init__(self, customer, coffee, price):
+            if not isinstance(customer, Customer):
+                raise Exception("customer must be an instance of Customer")
+            
+            if not isinstance(coffee, Coffee):
+                raise Exception("coffee must be an instance of Coffee")
+            
+            if not (isinstance(price, float) and 1.0 <= price <= 10.0):
+                raise Exception("price must be a float between 1.0 and 10.0")
+            # an order instance will not be created until all the validation fails 
+            self.customer = customer
+            self.coffee = coffee
+            self._price = price
+    
+
+        
+        @property
+        def price (self):
+            return self._price
+        #prevents changing price after initialization
+        @price.setter
+        def price (self,value):
+            raise Exception("Price is unchangeable once created.")
+
+        
+        
+        
 
 
-# stella_margy=Customer(name=1)
+stella_margy=Customer(name="Stella Margy")
 # print(stella_margy.name)
 
-# coffe1=Coffee(name=1)
-# print(coffe1.name)
-# coffe1.name="Expresso"
+latte=Coffee(name="latte")
+
+order_001=Order(customer=stella_margy,coffee=latte,price=1.1)
+print(order_001.price)
+order_001.price=5
+print(order_001.price)
+
