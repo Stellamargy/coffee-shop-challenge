@@ -2,6 +2,9 @@ class Customer():
     def __init__(self,name):
         #calls the  name setter and runs validation
         self.name=name
+
+    def __repr__(self):
+        return f"{self.name}"
     #Getter for name
     @property
     def name (self):
@@ -15,6 +18,9 @@ class Customer():
         #raises type error exception
         else:
             raise TypeError("Name should be a 1-15 character string")
+    #returns orders for a customer
+    def orders(self):
+        return [order for order in Order.all if order.customer==self]
 
 
 class Coffee():
@@ -24,6 +30,9 @@ class Coffee():
                 self._name=name
         else:
             raise Exception("Coffee should be atleast a 3 word string")
+        
+    def __repr__(self):
+        return f"{self.name}"
         
     #getter for name
     @property
@@ -38,42 +47,66 @@ class Coffee():
         
 
 class Order():
-        def __init__(self, customer, coffee, price):
-            if not isinstance(customer, Customer):
-                raise Exception("customer must be an instance of Customer")
-            
-            if not isinstance(coffee, Coffee):
-                raise Exception("coffee must be an instance of Coffee")
-            
-            if not (isinstance(price, float) and 1.0 <= price <= 10.0):
-                raise Exception("price must be a float between 1.0 and 10.0")
-            # an order instance will not be created until all the validation fails 
-            self.customer = customer
-            self.coffee = coffee
-            self._price = price
+    #Single source of truth-maintains data integrity
+    all=[]
+    def __init__(self, customer, coffee, price):
+        #runs the customer setter
+        self.customer = customer
+        #runs the coffee setter
+        self.coffee = coffee
+        #checks for price validation -price is immutable after initilation
+        if not (isinstance(price, float) and 1.0 <= price <= 10.0):
+            raise ValueError("price must be a float between 1.0 and 10.0")
+        self._price = price
+        #keeps track of all orders
+        Order.all.append(self)
+
+    def __repr__(self):
+        return f"{self.customer} {self.coffee} {self.price}"
+
+    @property
+    def customer(self):
+        return self._customer
+
+    @customer.setter
+    def customer(self, value):
+        if not isinstance(value, Customer):
+            raise TypeError("customer must be an instance of Customer")
+        self._customer = value
+
+    @property
+    def coffee(self):
+        return self._coffee
+
+    @coffee.setter
+    def coffee(self, value):
+        if not isinstance(value, Coffee):
+            raise TypeError("coffee must be an instance of Coffee")
+        self._coffee = value
+
+    @property
+    def price(self):
+        return self._price
+
+    @price.setter
+    def price(self, _):
+        raise AttributeError("Price is immutable once set.")
+    #Order.customer -return the customer for the specific order
     
-
-        
-        @property
-        def price (self):
-            return self._price
-        #prevents changing price after initialization
-        @price.setter
-        def price (self,value):
-            raise Exception("Price is unchangeable once created.")
-
-        
-        
         
 
 
 stella_margy=Customer(name="Stella Margy")
+moffat_oloo=Customer(name="Moffat Oloo" )
+laban_oloo=Customer(name="Laban Oloo")
+adie_atieno=Customer(name="Adie Atieno")
 # print(stella_margy.name)
 
 latte=Coffee(name="latte")
-
+americano=Coffee(name="Americano")
 order_001=Order(customer=stella_margy,coffee=latte,price=1.1)
-print(order_001.price)
-order_001.price=5
-print(order_001.price)
+order_002=Order(customer=stella_margy,coffee=americano,price=1.1)
+print(stella_margy.orders())
+
+
 
