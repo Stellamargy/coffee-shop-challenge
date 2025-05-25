@@ -18,7 +18,24 @@ class Customer():
 
 
 class Coffee():
-    pass
+    def __init__(self,name):
+        #run validations during the first time initialization
+        if(isinstance(name,str) and len(name)>=3):
+                self._name=name
+        else:
+            raise Exception("Coffee should be atleast a 3 word string")
+        
+    #getter for name
+    @property
+    def name (self):
+        return self._name 
+    #setter for name -coffee name is immutable once it has been initialized
+    @name.setter
+    def name (self,coffee_name):
+        raise Exception("You cant change coffee name")
+
+        
+        
 
 class Order():
     pass
@@ -26,3 +43,7 @@ class Order():
 
 # stella_margy=Customer(name=1)
 # print(stella_margy.name)
+
+# coffe1=Coffee(name=1)
+# print(coffe1.name)
+# coffe1.name="Expresso"
