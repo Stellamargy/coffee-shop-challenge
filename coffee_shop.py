@@ -30,8 +30,19 @@ class Customer():
         Order(self,coffee,price)
 
     @classmethod
-    def most_aficionado(self):
-        pass
+    def most_aficionado(cls,coffee):
+        #track the spending of all customers
+        spending_tracker={}
+        for order in Order.all:
+            if(order.coffee==coffee):
+                customer_name=order.customer
+                spending_tracker[customer_name]=spending_tracker.get(customer_name,0)+order.price
+
+        if(spending_tracker):
+            return max(spending_tracker,key=spending_tracker.get)
+        else:
+            return None
+        
 
 
 class Coffee():
@@ -138,9 +149,10 @@ order_001=Order(customer=stella_margy,coffee=lattee,price=2.0)
 order_002=Order(customer=stella_margy,coffee=lattee,price=2.0)
 order_003=Order(customer=laban_oloo,coffee=lattee,price=2.0)
 order_003=Order(customer=adie_atieno,coffee=lattee,price=2.0)
-print(stella_margy.coffees())
-print(americano.num_orders())
-print(lattee.average_price())
+# print(stella_margy.coffees())
+# print(americano.num_orders())
+# print(lattee.average_price())
+print(Customer.most_aficionado(lattee))
 
 
 
