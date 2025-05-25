@@ -25,6 +25,9 @@ class Customer():
     def coffees(self):
         # I am using a set to remove duplicates
         return list({order.coffee for order in Order.all if order.customer==self})
+    #Enables a customer to create an order
+    def create_order(self,coffee,price):
+        Order(self,coffee,price)
 
 
 class Coffee():
@@ -52,6 +55,17 @@ class Coffee():
     
     def customers(self):
         return list({order.customer for order in Order.all if order.coffee==self})
+    #total count of order for a particular coffee
+    def num_orders(self):
+        #Get orders for that particular coffee and return count
+        return len(self.orders()) 
+    
+    
+    def average_price(self):
+        pass
+    
+
+        
 
 
         
@@ -102,7 +116,7 @@ class Order():
     @price.setter
     def price(self, _):
         raise AttributeError("Price is immutable once set.")
-    #Order.customer -return the customer for the specific order
+   
     
         
 
@@ -120,7 +134,7 @@ order_002=Order(customer=stella_margy,coffee=lattee,price=1.1)
 order_003=Order(customer=laban_oloo,coffee=lattee,price=1.1)
 order_003=Order(customer=adie_atieno,coffee=lattee,price=1.1)
 print(stella_margy.coffees())
-print(lattee.customers())
+print(americano.num_orders())
 
 
 
