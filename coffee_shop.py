@@ -46,6 +46,10 @@ class Coffee():
     @name.setter
     def name (self,coffee_name):
         raise Exception("You cant change coffee name")
+    #returns all orders for a speciific coffee
+    def orders(self):
+        return [order for order in Order.all if order.coffee==self]
+
 
         
         
@@ -109,8 +113,9 @@ adie_atieno=Customer(name="Adie Atieno")
 lattee=Coffee(name="latte")
 americano=Coffee(name="Americano")
 order_001=Order(customer=stella_margy,coffee=lattee,price=1.1)
-order_002=Order(customer=stella_margy,coffee=lattee,price=1.1)
+order_002=Order(customer=laban_oloo,coffee=lattee,price=1.1)
 print(stella_margy.coffees())
+print(lattee.orders())
 
 
 
