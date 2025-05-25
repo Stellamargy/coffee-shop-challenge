@@ -21,6 +21,10 @@ class Customer():
     #returns orders for a customer
     def orders(self):
         return [order for order in Order.all if order.customer==self]
+    
+    def coffees(self):
+        # I am using a set to remove duplicates
+        return list({order.coffee for order in Order.all if order.customer==self})
 
 
 class Coffee():
@@ -102,11 +106,11 @@ laban_oloo=Customer(name="Laban Oloo")
 adie_atieno=Customer(name="Adie Atieno")
 # print(stella_margy.name)
 
-latte=Coffee(name="latte")
+lattee=Coffee(name="latte")
 americano=Coffee(name="Americano")
-order_001=Order(customer=stella_margy,coffee=latte,price=1.1)
-order_002=Order(customer=stella_margy,coffee=americano,price=1.1)
-print(stella_margy.orders())
+order_001=Order(customer=stella_margy,coffee=lattee,price=1.1)
+order_002=Order(customer=stella_margy,coffee=lattee,price=1.1)
+print(stella_margy.coffees())
 
 
 
