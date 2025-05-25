@@ -29,6 +29,10 @@ class Customer():
     def create_order(self,coffee,price):
         Order(self,coffee,price)
 
+    @classmethod
+    def most_aficionado(self):
+        pass
+
 
 class Coffee():
     def __init__(self,name):
@@ -60,9 +64,10 @@ class Coffee():
         #Get orders for that particular coffee and return count
         return len(self.orders()) 
     
-    
+    #Mean of all order prices for this coffee
     def average_price(self):
-        pass
+        orders_prices=[order.price for order in Order.all if order.coffee==self]
+        return sum(orders_prices) / self.num_orders()
     
 
         
@@ -129,12 +134,13 @@ adie_atieno=Customer(name="Adie Atieno")
 
 lattee=Coffee(name="latte")
 americano=Coffee(name="Americano")
-order_001=Order(customer=stella_margy,coffee=lattee,price=1.1)
-order_002=Order(customer=stella_margy,coffee=lattee,price=1.1)
-order_003=Order(customer=laban_oloo,coffee=lattee,price=1.1)
-order_003=Order(customer=adie_atieno,coffee=lattee,price=1.1)
+order_001=Order(customer=stella_margy,coffee=lattee,price=2.0)
+order_002=Order(customer=stella_margy,coffee=lattee,price=2.0)
+order_003=Order(customer=laban_oloo,coffee=lattee,price=2.0)
+order_003=Order(customer=adie_atieno,coffee=lattee,price=2.0)
 print(stella_margy.coffees())
 print(americano.num_orders())
+print(lattee.average_price())
 
 
 
